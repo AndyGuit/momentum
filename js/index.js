@@ -24,6 +24,7 @@ const playListContainer = document.querySelector('ul.play-list');
 const audioProgress = document.querySelector('.progress>input');
 const audioVol = document.querySelector('.volume>input');
 const volBtn = document.querySelector('.volume button');
+const trackName = document.querySelector('.track-name');
 
 let randomNum = Math.floor(Math.random() * 20) + 1;
 let playNum = 0;
@@ -161,10 +162,14 @@ function playAudio() {
     audio.currentTime = 0;
     audio.play();
     highlightActiveTrack();
+    changeListIcon();
+    toggleBtn()
   } else {
     isPlay = false;
     audio.pause();
     highlightActiveTrack();
+    changeListIcon();
+    toggleBtn()
   }
 }
 
@@ -206,9 +211,12 @@ prevBtn.addEventListener('click', playPrev);
 
 function createTrack(trackName) {
   const li = document.createElement('li');
+  const icon = document.createElement('i');
   li.classList.add('play-item');
+  icon.classList.add('fas', 'fa-play-circle');
   li.textContent = trackName;
   playListContainer.append(li);
+  li.prepend(icon);
 }
 
 playList.forEach(el => createTrack(el.title));
@@ -291,3 +299,44 @@ function muteAudio() {
     volBtn.classList.add('fa-volume-mute');
   }
 }
+
+audio.addEventListener('timeupdate', showPlayableTrackName);
+
+function showPlayableTrackName() {
+  trackName.innerText = playList[playNum].title;
+}
+
+const playListItems = document.querySelectorAll('li.play-item');
+
+function changeListIcon() {
+  playListItems.forEach(track => {
+    const trackIcon = track.querySelector('i');
+
+    if (isPlay && track.classList.contains('item-active')) {
+      trackIcon.classList.remove('fa-play-circle');
+      trackIcon.classList.add('fa-pause-circle');
+    } else {
+      trackIcon.classList.remove('fa-pause-circle');
+      trackIcon.classList.add('fa-play-circle');
+    }
+  });
+}
+
+function playListAudio() {
+  playListItems.forEach((track, i) => {
+    const trackIcon = track.querySelector('i');
+
+    trackIcon.addEventListener('click', (e) => {
+      if (e.target.classList.contains('fa-play-circle')) {
+        playNum = i;
+        isPlay = false;
+        playAudio();
+      } else {
+        playNum = i;
+        playAudio();
+      }
+    });
+  });
+}
+
+playListAudio();

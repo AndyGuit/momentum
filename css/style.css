@@ -80,7 +80,7 @@ body {
   display: none;
 }
 
-.progress span {
+.progress .track-time {
   color: rgba(255, 255, 255, 0.8);
   position: relative;
   bottom: -1px;
@@ -90,6 +90,17 @@ body {
 .progress {
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+.track-name {
+  display: flex;
+  width: 200px;
+  justify-content: center;
+  position: absolute;
+  bottom: 15px;
+  left: 75px;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .progress input::-webkit-slider-runnable-track,
@@ -103,6 +114,7 @@ body {
 .volume button {
   position: relative;
   top: 2px;
+  width: 20px;
   color: rgba(255, 255, 255, 0.8);
   background: transparent;
   font-size: 16px;
@@ -121,7 +133,7 @@ body {
 .play-item {
   position: relative;
   padding: 5px;
-  padding-left: 20px;
+  /* padding-left: 20px; */
   list-style: none;
   opacity: 0.8;
   cursor: pointer;
@@ -132,7 +144,11 @@ body {
   opacity: 1;
 }
 
-.play-item::before {
+.play-item i {
+  margin-right: 5px;
+}
+
+/* .play-item::before {
   content: "\2713";
   position: absolute;
   left: 0;
@@ -142,7 +158,7 @@ body {
 
 .item-active::before {
   color: #c5b358;
-}
+} */
 
 .player-icon,
 .slider-icon,
