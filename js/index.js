@@ -324,15 +324,13 @@ function changeListIcon() {
 
 function playListAudio() {
   playListItems.forEach((track, i) => {
-    const trackIcon = track.querySelector('i');
-
-    trackIcon.addEventListener('click', (e) => {
-      if (e.target.classList.contains('fa-play-circle')) {
+    track.addEventListener('click', (e) => {
+      if (e.target.classList.contains('item-active')) {
         playNum = i;
-        isPlay = false;
         playAudio();
       } else {
         playNum = i;
+        isPlay = false;
         playAudio();
       }
     });
