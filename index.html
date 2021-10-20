@@ -33,11 +33,28 @@
         </div>
         <ul class="play-list"></ul>
       </div>
-      <div class="language">
-        <select>
-          <option value="en">EN</option>
-          <option value="ru">RU</option>
-        </select>
+      <div class="settings">
+        <div class="language">
+          <select>
+            <option value="en">EN</option>
+            <option value="ru">RU</option>
+          </select>
+        </div>
+        <div class="picture">
+          <p>Choose picture source</p>
+          <div class="picture__option">
+            <input type="radio" name="picture" id="github" />
+            <label for="github">Github</label>
+          </div>
+          <div class="picture__option">
+            <input type="radio" name="picture" id="unsplash" />
+            <label for="unsplash">Unsplash</label>
+          </div>
+          <div class="picture__option">
+            <input type="radio" name="picture" id="flickr" />
+            <label for="flickr">Flickr</label>
+          </div>
+        </div>
       </div>
       <div class="weather">
         <input type="text" class="city" />

@@ -221,6 +221,12 @@ body {
   color: #000;
 }
 
+.picture {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .weather {
   display: flex;
   flex-direction: column;

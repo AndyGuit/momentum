@@ -27,9 +27,11 @@ const audioVol = document.querySelector('.volume>input');
 const volBtn = document.querySelector('.volume button');
 const trackName = document.querySelector('.track-name');
 const langSelect = document.querySelector('.language>select');
+const picOptions = document.querySelectorAll('input[name="picture"]');
 
 let randomNum = Math.floor(Math.random() * 20) + 1;
-let appLanguage = localStorage.getItem('language');
+let appLanguage = localStorage.getItem('language') || langSelect.value;
+let picSource = localStorage.getItem('picSource') || 'github';
 let playNum = 0;
 let isPlay = false;
 let isMouseDown = false;
@@ -45,26 +47,26 @@ function showTime() {
 
 showTime();
 
-function showDate(lang = appLanguage) {
+function showDate() {
   const dateObj = new Date();
   const options = {
     weekday: 'long',
     month: 'long',
     day: 'numeric',
   };
-  const currentDate = dateObj.toLocaleDateString(lang, options);
+  const currentDate = dateObj.toLocaleDateString(appLanguage, options);
   dateBlock.textContent = currentDate;
 }
 
 showDate();
 
-function getTimeOfDay(lang = appLanguage) {
+function getTimeOfDay() {
   const date = new Date();
   const hours = date.getHours();
   const timeOfDay = ['night', 'morning', 'day', 'evening'];
   const timeIndex = Math.floor(hours / 6);
-  nameBlock.placeholder = translation.placeholder[lang];
-  greetingBlock.textContent = translation.greeting[lang][timeIndex];
+  nameBlock.placeholder = translation.placeholder[appLanguage];
+  greetingBlock.textContent = translation.greeting[appLanguage][timeIndex];
 
   return timeOfDay[timeIndex];
 }
@@ -75,6 +77,7 @@ function setLocalStorage() {
   localStorage.setItem('name', nameBlock.value);
   localStorage.setItem('city', cityInput.value);
   localStorage.setItem('language', appLanguage || langSelect.value);
+  localStorage.setItem('picSource', picSource);
 }
 window.addEventListener('beforeunload', setLocalStorage);
 
@@ -92,15 +95,16 @@ function getLocalStorage() {
   if (localStorage.getItem('language')) {
     langSelect.value = localStorage.getItem('language');
   }
+  if (localStorage.getItem('picSource')) {
+    picSource = localStorage.getItem('picSource');
+    document.getElementById(picSource).checked = true;
+  }
 }
 window.addEventListener('load', getLocalStorage);
 
-function setBg() {
-  const bgNum = randomNum;
-  const bgString = bgNum.toString().padStart(2, '0');
-
+async function setBg() {
   const img = new Image();
-  img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${getTimeOfDay()}/${bgString}.jpg`;
+  img.src = await getLinkToImage();
 
   img.onload = () => {
     body.style.backgroundImage = `url('${img.src}')`;
@@ -133,8 +137,8 @@ function getSlidePrev() {
 
 slidePrev.addEventListener('click', getSlidePrev);
 
-async function getWeather(lang = appLanguage) {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&lang=${lang}&appid=08f2a575dda978b9c539199e54df03b0&units=metric`;
+async function getWeather() {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&lang=${appLanguage}&appid=08f2a575dda978b9c539199e54df03b0&units=metric`;
   const res = await fetch(url);
   const data = await res.json();
 
@@ -142,8 +146,8 @@ async function getWeather(lang = appLanguage) {
   weatherIcon.classList.add(`owf-${data.weather[0].id}`);
   temperature.textContent = `${Math.round(data.main.temp)}°C`;
   weatherDescription.textContent = data.weather[0].description;
-  wind.textContent = `${translation.wind[lang]}: ${data.wind.speed} ${translation.windValue[lang]}`; // `Wind speed: ${data.wind.speed} m/s`
-  humidity.textContent = `${translation.humidity[lang]}: ${data.main.humidity}%`; //`Humidity: ${data.main.humidity}%`
+  wind.textContent = `${translation.wind[appLanguage]}: ${data.wind.speed} ${translation.windValue[appLanguage]}`;
+  humidity.textContent = `${translation.humidity[appLanguage]}: ${data.main.humidity}%`;
 }
 
 cityInput.addEventListener('change', getWeather);
@@ -352,7 +356,7 @@ function playListAudio() {
 
 playListAudio();
 
-langSelect.addEventListener('change', e => appLanguage = e.target.value);
+langSelect.addEventListener('change', () => appLanguage = langSelect.value);
 langSelect.addEventListener('change', translateApp);
 
 function translateApp() {
@@ -361,3 +365,37 @@ function translateApp() {
   getWeather();
   getQuote();
 }
+
+async function getLinkToImage() {
+  const bgNum = randomNum.toString().padStart(2, '0');
+
+  let url;
+  let imgLink;
+
+  if (picSource === 'unsplash') {
+    url = `https://api.unsplash.com/photos/random?query=${getTimeOfDay()}&client_id=7ujidxk950M1vbghIqHgUXaODWIEEKDKilnv7eeiWJU`;
+    const res = await fetch(url);
+    const data = await res.json();
+    imgLink = data.urls.regular;
+  }
+  if (picSource === 'flickr') {
+    url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=9ff3c0b8944f4f287cb74c77ca1ed047&tags=${getTimeOfDay()}&extras=url_l&format=json&nojsoncallback=1`;
+    const res = await fetch(url);
+    const data = await res.json();
+    imgLink = data.photos.photo[randomNum].url_l;
+  }
+  if (picSource === 'github') {
+    imgLink = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${getTimeOfDay()}/${bgNum}.jpg`
+  }
+
+  return imgLink;
+}
+
+picOptions.forEach(pic => {
+  pic.addEventListener('change', () => {
+    if (pic.checked) {
+      picSource = pic.id;
+      setBg();
+    }
+  });
+});
