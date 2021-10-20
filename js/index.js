@@ -1,4 +1,5 @@
 import playList from './playList.js';
+import translation from './translation.js';
 
 const timeBlock = document.querySelector('time.time');
 const dateBlock = document.querySelector('date.date');
@@ -25,8 +26,10 @@ const audioProgress = document.querySelector('.progress>input');
 const audioVol = document.querySelector('.volume>input');
 const volBtn = document.querySelector('.volume button');
 const trackName = document.querySelector('.track-name');
+const langSelect = document.querySelector('.language>select');
 
 let randomNum = Math.floor(Math.random() * 20) + 1;
+let appLanguage = localStorage.getItem('language');
 let playNum = 0;
 let isPlay = false;
 let isMouseDown = false;
@@ -42,25 +45,26 @@ function showTime() {
 
 showTime();
 
-function showDate() {
+function showDate(lang = appLanguage) {
   const dateObj = new Date();
   const options = {
     weekday: 'long',
     month: 'long',
     day: 'numeric',
   };
-  const currentDate = dateObj.toLocaleDateString('en-EN', options);
+  const currentDate = dateObj.toLocaleDateString(lang, options);
   dateBlock.textContent = currentDate;
 }
 
 showDate();
 
-function getTimeOfDay() {
+function getTimeOfDay(lang = appLanguage) {
   const date = new Date();
   const hours = date.getHours();
   const timeOfDay = ['night', 'morning', 'day', 'evening'];
   const timeIndex = Math.floor(hours / 6);
-  greetingBlock.textContent = `Good ${timeOfDay[timeIndex] === 'day' ? 'afternoon' : timeOfDay[timeIndex]}`;
+  nameBlock.placeholder = translation.placeholder[lang];
+  greetingBlock.textContent = translation.greeting[lang][timeIndex];
 
   return timeOfDay[timeIndex];
 }
@@ -70,6 +74,7 @@ getTimeOfDay();
 function setLocalStorage() {
   localStorage.setItem('name', nameBlock.value);
   localStorage.setItem('city', cityInput.value);
+  localStorage.setItem('language', appLanguage || langSelect.value);
 }
 window.addEventListener('beforeunload', setLocalStorage);
 
@@ -83,6 +88,9 @@ function getLocalStorage() {
   } else {
     cityInput.value = 'Minsk';
     getWeather();
+  }
+  if (localStorage.getItem('language')) {
+    langSelect.value = localStorage.getItem('language');
   }
 }
 window.addEventListener('load', getLocalStorage);
@@ -125,8 +133,8 @@ function getSlidePrev() {
 
 slidePrev.addEventListener('click', getSlidePrev);
 
-async function getWeather() {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&lang=en&appid=08f2a575dda978b9c539199e54df03b0&units=metric`;
+async function getWeather(lang = appLanguage) {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&lang=${lang}&appid=08f2a575dda978b9c539199e54df03b0&units=metric`;
   const res = await fetch(url);
   const data = await res.json();
 
@@ -134,21 +142,26 @@ async function getWeather() {
   weatherIcon.classList.add(`owf-${data.weather[0].id}`);
   temperature.textContent = `${Math.round(data.main.temp)}°C`;
   weatherDescription.textContent = data.weather[0].description;
-  wind.textContent = `Wind speed: ${data.wind.speed} m/s`;
-  humidity.textContent = `Humidity: ${data.main.humidity}%`;
+  wind.textContent = `${translation.wind[lang]}: ${data.wind.speed} ${translation.windValue[lang]}`; // `Wind speed: ${data.wind.speed} m/s`
+  humidity.textContent = `${translation.humidity[lang]}: ${data.main.humidity}%`; //`Humidity: ${data.main.humidity}%`
 }
 
 cityInput.addEventListener('change', getWeather);
 
 async function getQuote() {
-  const url = 'https://type.fit/api/quotes';
+  let url;
+  if (appLanguage === 'en') {
+    url = 'https://type.fit/api/quotes';
+  } else if (appLanguage === 'ru') {
+    url = '../data/rusQuotes.json';
+  }
   const res = await fetch(url);
   const data = await res.json();
 
   const random = Math.floor(Math.random() * data.length);
 
   quote.textContent = data[random].text;
-  quoteAuthor.textContent = data[random].author;
+  quoteAuthor.textContent = data[random].author || 'Unknown Author';
 }
 
 getQuote();
@@ -163,13 +176,13 @@ function playAudio() {
     audio.play();
     highlightActiveTrack();
     changeListIcon();
-    toggleBtn()
+    toggleBtn();
   } else {
     isPlay = false;
     audio.pause();
     highlightActiveTrack();
     changeListIcon();
-    toggleBtn()
+    toggleBtn();
   }
 }
 
@@ -338,3 +351,13 @@ function playListAudio() {
 }
 
 playListAudio();
+
+langSelect.addEventListener('change', e => appLanguage = e.target.value);
+langSelect.addEventListener('change', translateApp);
+
+function translateApp() {
+  showTime();
+  getTimeOfDay();
+  getWeather();
+  getQuote();
+}

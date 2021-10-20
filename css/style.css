@@ -209,13 +209,25 @@ body {
   background-image: url("../assets/svg/play-next.svg");
 }
 
+.language select {
+  color: #fff;
+  background: transparent;
+  outline: none;
+  border: 1px solid #fff;
+  border-radius: 10px;
+}
+
+.language select option {
+  color: #000;
+}
+
 .weather {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   row-gap: 5px;
-  width: 180px;
+  width: 190px;
   min-height: 180px;
   text-align: left;
 }
