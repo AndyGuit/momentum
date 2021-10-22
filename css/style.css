@@ -138,6 +138,7 @@ body {
   opacity: 0.8;
   cursor: pointer;
   transition: 0.3s;
+  width: fit-content;
 }
 
 .play-item:hover {

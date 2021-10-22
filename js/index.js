@@ -345,7 +345,7 @@ function changeListIcon() {
 function playListAudio() {
   playListItems.forEach((track, i) => {
     track.addEventListener('click', (e) => {
-      if (e.target.classList.contains('item-active')) {
+      if (e.target.classList.contains('item-active') || e.target.classList.contains('fa-pause-circle')) {
         playNum = i;
         playAudio();
       } else {
