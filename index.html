@@ -33,41 +33,7 @@
         </div>
         <ul class="play-list"></ul>
       </div>
-      <div class="settings">
-        <div class="language">
-          <select>
-            <option value="en">EN</option>
-            <option value="ru">RU</option>
-          </select>
-        </div>
-        <div class="picture">
-          <p>Choose picture source</p>
-          <div class="picture__option">
-            <input type="radio" name="picture" id="github" />
-            <label for="github">Github</label>
-          </div>
-          <div class="picture__option">
-            <input type="radio" name="picture" id="unsplash" />
-            <label for="unsplash">Unsplash</label>
-          </div>
-          <div class="picture__option">
-            <input type="radio" name="picture" id="flickr" />
-            <label for="flickr">Flickr</label>
-          </div>
-          <div class="picture__tags">
-            <div class="picture__tags-header">
-              <img src="assets/svg/tag.svg" alt="tag-icon" />
-              <p>Tags</p>
-            </div>
-            <p>Press enter to add tag</p>
-            <p>(Unsplash or Flickr only)</p>
-            <ul>
-              <!-- <li>nature<span>&#10005;</span></li> -->
-              <input type="text" name="" id="" />
-            </ul>
-          </div>
-        </div>
-      </div>
+
       <div class="weather">
         <input type="text" class="city" />
         <i class="weather-icon owf"></i>
@@ -97,6 +63,45 @@
       <div>
         <div class="quote"></div>
         <div class="author"></div>
+      </div>
+      <div class="settings">
+        <div class="settings__block">
+          <div class="language">
+            <p>Choose Language</p>
+            <select>
+              <option value="en">EN</option>
+              <option value="ru">RU</option>
+            </select>
+          </div>
+          <div class="picture">
+            <p>Choose picture source</p>
+            <div class="picture__option">
+              <input type="radio" name="picture" id="github" />
+              <label for="github">Github</label>
+            </div>
+            <div class="picture__option">
+              <input type="radio" name="picture" id="unsplash" />
+              <label for="unsplash">Unsplash</label>
+            </div>
+            <div class="picture__option">
+              <input type="radio" name="picture" id="flickr" />
+              <label for="flickr">Flickr</label>
+            </div>
+            <div class="picture__tags">
+              <div class="picture__tags-header">
+                <img src="assets/svg/tag.svg" alt="tag-icon" />
+                <p>Tags</p>
+              </div>
+              <p>Press enter to add tag</p>
+              <p>(Unsplash or Flickr only)</p>
+              <ul>
+                <!-- <li>nature<span>&#10005;</span></li> -->
+                <input type="text" name="" id="" />
+              </ul>
+            </div>
+          </div>
+        </div>
+        <i class="fas fa-cog"></i>
       </div>
     </footer>
     <script type="module" src="js/index.js"></script>

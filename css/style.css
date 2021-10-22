@@ -210,11 +210,14 @@ body {
   background-image: url("../assets/svg/play-next.svg");
 }
 
+.language {
+  display: flex;
+}
+
 .language select {
-  color: #fff;
   background: transparent;
   outline: none;
-  border: 1px solid #fff;
+  border: 1px solid #000;
   border-radius: 10px;
 }
 
@@ -407,6 +410,45 @@ body {
   height: 30vh;
   min-height: 160px;
   padding: 20px;
+}
+
+.settings {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.settings i {
+  opacity: 0.8;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 20px;
+}
+
+.settings i:hover,
+.settings i.active-icon {
+  opacity: 1;
+  font-size: 20px;
+  transform: rotate(-60deg);
+}
+
+.settings__block {
+  color: black;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.settings__block.show-settings {
+  opacity: 1;
+  pointer-events: all;
 }
 
 .change-quote {

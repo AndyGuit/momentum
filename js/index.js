@@ -30,6 +30,7 @@ const langSelect = document.querySelector('.language>select');
 const picOptions = document.querySelectorAll('input[name="picture"]');
 const tagInput = document.querySelector('.picture__tags ul input');
 const tagList = document.querySelector('.picture__tags ul');
+const settingsIcon = document.querySelector('.settings i');
 
 let randomNum = Math.floor(Math.random() * 20) + 1;
 let appLanguage = localStorage.getItem('language') || langSelect.value;
@@ -446,4 +447,11 @@ function removeTag(e) {
   tags = [...tags.slice(0, index), ...tags.slice(index + 1)];
   e.target.parentElement.remove();
   setBg();
+}
+
+settingsIcon.addEventListener('click', showSettings);
+
+function showSettings() {
+  settingsIcon.classList.toggle('active-icon');
+  settingsIcon.previousElementSibling.classList.toggle('show-settings');
 }
