@@ -27,10 +27,11 @@ const audioVol = document.querySelector('.volume>input');
 const volBtn = document.querySelector('.volume button');
 const trackName = document.querySelector('.track-name');
 const langSelect = document.querySelector('.language>select');
-const picOptions = document.querySelectorAll('input[name="picture"]');
+const picOptions = document.querySelector('.picture select');
 const tagInput = document.querySelector('.picture__tags ul input');
 const tagList = document.querySelector('.picture__tags ul');
 const settingsIcon = document.querySelector('.settings i');
+const settingsBlock = document.querySelector('.settings__block');
 
 let randomNum = Math.floor(Math.random() * 20) + 1;
 let appLanguage = localStorage.getItem('language') || langSelect.value;
@@ -81,7 +82,7 @@ function setLocalStorage() {
   localStorage.setItem('name', nameBlock.value);
   localStorage.setItem('city', cityInput.value);
   localStorage.setItem('language', appLanguage || langSelect.value);
-  localStorage.setItem('picSource', picSource);
+  localStorage.setItem('picSource', picOptions.value);
 }
 window.addEventListener('beforeunload', setLocalStorage);
 
@@ -101,7 +102,7 @@ function getLocalStorage() {
   }
   if (localStorage.getItem('picSource')) {
     picSource = localStorage.getItem('picSource');
-    document.getElementById(picSource).checked = true;
+    picOptions.value = localStorage.getItem('picSource');
   }
 }
 window.addEventListener('load', getLocalStorage);
@@ -402,13 +403,9 @@ async function getLinkToImage() {
   return imgLink;
 }
 
-picOptions.forEach(pic => {
-  pic.addEventListener('change', () => {
-    if (pic.checked) {
-      picSource = pic.id;
-      setBg();
-    }
-  });
+picOptions.addEventListener('change', () => {
+  picSource = picOptions.value;
+  setBg();
 });
 
 tagInput.addEventListener('keydown', addTag);
@@ -454,4 +451,12 @@ settingsIcon.addEventListener('click', showSettings);
 function showSettings() {
   settingsIcon.classList.toggle('active-icon');
   settingsIcon.previousElementSibling.classList.toggle('show-settings');
+}
+
+body.addEventListener('click', hideElement);
+
+function hideElement(e) {
+  if (!e.target.closest('.settings')) {
+    settingsIcon.previousElementSibling.classList.toggle('show-settings');
+  }
 }
