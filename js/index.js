@@ -369,6 +369,7 @@ function translateApp() {
   getTimeOfDay();
   getWeather();
   getQuote();
+  settingsTranslation();
 }
 
 async function getLinkToImage() {
@@ -460,3 +461,13 @@ function hideElement(e) {
     settingsIcon.previousElementSibling.classList.remove('show-settings');
   }
 }
+
+function settingsTranslation() {
+  settingsBlock.querySelector('.language p').innerText = translation.settings.language[appLanguage];
+  settingsBlock.querySelector('.picture__options p').innerText = translation.settings.picSource[appLanguage];
+  settingsBlock.querySelector('.picture__tags-header>p').innerText = translation.settings.tags[appLanguage];
+  settingsBlock.querySelector('.picture__tags>p').innerText = translation.settings.tagsHowTo[appLanguage];
+  settingsBlock.querySelector('.picture__tags>p+p').innerText = translation.settings.tagsSources[appLanguage];
+}
+
+settingsTranslation();

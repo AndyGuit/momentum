@@ -19,6 +19,28 @@ const translation = {
     en: 'm/s',
     ru: 'м/с',
   },
+  settings: {
+    language: {
+      en: 'Choose Language',
+      ru: 'Выберите язык',
+    },
+    picSource: {
+      en: 'Choose Picture Source',
+      ru: 'Выберите источник изображений',
+    },
+    tags: {
+      en: 'Tags',
+      ru: 'Теги',
+    },
+    tagsHowTo: {
+      en: 'Press \'Enter\' to add tag',
+      ru: 'Нажмите \'Enter\' чтобы добавить тег',
+    },
+    tagsSources: {
+      en: '(Unsplash or Flickr only)',
+      ru: '(только Unsplash или Flickr)'
+    }
+  }
 };
 
 export default translation;
