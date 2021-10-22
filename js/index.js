@@ -28,11 +28,14 @@ const volBtn = document.querySelector('.volume button');
 const trackName = document.querySelector('.track-name');
 const langSelect = document.querySelector('.language>select');
 const picOptions = document.querySelectorAll('input[name="picture"]');
+const tagInput = document.querySelector('.picture__tags ul input');
+const tagList = document.querySelector('.picture__tags ul');
 
 let randomNum = Math.floor(Math.random() * 20) + 1;
 let appLanguage = localStorage.getItem('language') || langSelect.value;
 let picSource = localStorage.getItem('picSource') || 'github';
 let playNum = 0;
+let tags = [];
 let isPlay = false;
 let isMouseDown = false;
 
@@ -371,21 +374,28 @@ async function getLinkToImage() {
 
   let url;
   let imgLink;
+  let tag;
+
+  if (tags.length !== 0) {
+    tag = tags.join(',');
+  } else {
+    tag = getTimeOfDay();
+  }
 
   if (picSource === 'unsplash') {
-    url = `https://api.unsplash.com/photos/random?query=${getTimeOfDay()}&client_id=7ujidxk950M1vbghIqHgUXaODWIEEKDKilnv7eeiWJU`;
+    url = `https://api.unsplash.com/photos/random?query=${tag}&client_id=7ujidxk950M1vbghIqHgUXaODWIEEKDKilnv7eeiWJU`;
     const res = await fetch(url);
     const data = await res.json();
     imgLink = data.urls.regular;
   }
   if (picSource === 'flickr') {
-    url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=9ff3c0b8944f4f287cb74c77ca1ed047&tags=${getTimeOfDay()}&extras=url_l&format=json&nojsoncallback=1`;
+    url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=9ff3c0b8944f4f287cb74c77ca1ed047&tags=${tag}&tag_mode=any&extras=url_l&format=json&nojsoncallback=1`;
     const res = await fetch(url);
     const data = await res.json();
     imgLink = data.photos.photo[randomNum].url_l;
   }
   if (picSource === 'github') {
-    imgLink = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${getTimeOfDay()}/${bgNum}.jpg`
+    imgLink = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${getTimeOfDay()}/${bgNum}.jpg`;
   }
 
   return imgLink;
@@ -399,3 +409,41 @@ picOptions.forEach(pic => {
     }
   });
 });
+
+tagInput.addEventListener('keydown', addTag);
+
+function addTag(e) {
+  if (e.key === 'Enter') {
+    let tag = e.target.value.replace(/\s+/g, ' ');
+
+    if (tag.length > 1 && !tags.includes(tag)) {
+      if (tags.length < 4) {
+        tags.push(tag);
+        createTag(tag);
+      }
+    }
+    e.target.value = '';
+  }
+}
+
+function createTag(tag) {
+  let liTag = `<li>${tag}<span class="close-tag">&#10005;</span></li>`;
+
+  tagList.insertAdjacentHTML('afterbegin', liTag);
+
+  setBg();
+}
+
+tagList.addEventListener('click', function (e) {
+  if (e.target.classList.contains('close-tag')) {
+    removeTag(e);
+  }
+});
+
+function removeTag(e) {
+  let thisTag = e.target.parentElement.textContent.slice(0, -1);
+  let index = tags.indexOf(thisTag);
+  tags = [...tags.slice(0, index), ...tags.slice(index + 1)];
+  e.target.parentElement.remove();
+  setBg();
+}

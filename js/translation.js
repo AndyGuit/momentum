@@ -1,6 +1,6 @@
 const translation = {
   greeting: {
-    en: ['Good night', 'Good morning', 'Good day', 'Good evening'],
+    en: ['Good night', 'Good morning', 'Good afternoon', 'Good evening'],
     ru: ['Доброй ночи', 'Доброе утро', 'Добрый день', 'Добрый вечер']
   },
   placeholder: {
