@@ -7,6 +7,10 @@ const translation = {
     en: '[Enter name]',
     ru: '[Введите имя]'
   },
+  weatherError: {
+    en: 'Oops... something went wrong, or you entered an incorrect value. ',
+    ru: 'Упс... что-то пошло не так, либо вы ввели неправильное значение.',
+  },
   humidity: {
     en: 'Humidity',
     ru: 'Влажность',
