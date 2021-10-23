@@ -480,7 +480,7 @@ function settingsTranslation() {
   settingsBlock.querySelector('.settings-header').innerText = translation.settings.blocks.head[appLanguage];
   settingsBlock.querySelector('label[for="player"]').innerText = translation.settings.blocks.player[appLanguage];
   settingsBlock.querySelector('label[for="weather"]').innerText = translation.settings.blocks.weather[appLanguage];
-  settingsBlock.querySelector('label[for="quotes"]').innerText = translation.settings.blocks.quotes[appLanguage];
+  settingsBlock.querySelector('label[for="quote"]').innerText = translation.settings.blocks.quotes[appLanguage];
 }
 
 settingsTranslation();
