@@ -479,7 +479,7 @@ body.addEventListener('click', hideElement);
 function hideElement(e) {
   if (!e.target.closest('.settings')) {
     settingsIcon.previousElementSibling.classList.remove('show-settings');
-    settingsIcon.classList.toggle('active-icon');
+    settingsIcon.classList.remove('active-icon');
   }
 }
 
