@@ -32,12 +32,14 @@ const tagInput = document.querySelector('.picture__tags ul input');
 const tagList = document.querySelector('.picture__tags ul');
 const settingsIcon = document.querySelector('.settings i');
 const settingsBlock = document.querySelector('.settings__block');
+const hideBlocks = document.querySelector('.hide-blocks');
 
 let randomNum = Math.floor(Math.random() * 20) + 1;
 let appLanguage = localStorage.getItem('language') || langSelect.value;
 let picSource = localStorage.getItem('picSource') || 'github';
 let playNum = 0;
 let tags = [];
+let hiddenBlocks = [];
 let isPlay = false;
 let isMouseDown = false;
 
@@ -83,6 +85,7 @@ function setLocalStorage() {
   localStorage.setItem('city', cityInput.value);
   localStorage.setItem('language', appLanguage || langSelect.value);
   localStorage.setItem('picSource', picOptions.value);
+  localStorage.setItem('hiddenBlocks', hiddenBlocks);
 }
 window.addEventListener('beforeunload', setLocalStorage);
 
@@ -103,6 +106,10 @@ function getLocalStorage() {
   if (localStorage.getItem('picSource')) {
     picSource = localStorage.getItem('picSource');
     picOptions.value = localStorage.getItem('picSource');
+  }
+  if (localStorage.getItem('hiddenBlocks')) {
+    hiddenBlocks = localStorage.getItem('hiddenBlocks').split(',');
+    blockSettings();
   }
 }
 window.addEventListener('load', getLocalStorage);
@@ -459,6 +466,7 @@ body.addEventListener('click', hideElement);
 function hideElement(e) {
   if (!e.target.closest('.settings')) {
     settingsIcon.previousElementSibling.classList.remove('show-settings');
+    settingsIcon.classList.toggle('active-icon');
   }
 }
 
@@ -468,6 +476,52 @@ function settingsTranslation() {
   settingsBlock.querySelector('.picture__tags-header>p').innerText = translation.settings.tags[appLanguage];
   settingsBlock.querySelector('.picture__tags>p').innerText = translation.settings.tagsHowTo[appLanguage];
   settingsBlock.querySelector('.picture__tags>p+p').innerText = translation.settings.tagsSources[appLanguage];
+  settingsBlock.querySelector('.picture__tags>p+p').innerText = translation.settings.tagsSources[appLanguage];
+  settingsBlock.querySelector('.settings-header').innerText = translation.settings.blocks.head[appLanguage];
+  settingsBlock.querySelector('label[for="player"]').innerText = translation.settings.blocks.player[appLanguage];
+  settingsBlock.querySelector('label[for="weather"]').innerText = translation.settings.blocks.weather[appLanguage];
+  settingsBlock.querySelector('label[for="quotes"]').innerText = translation.settings.blocks.quotes[appLanguage];
 }
 
 settingsTranslation();
+
+function blockSettings() {
+  hideBlocks.querySelectorAll('input').forEach(block => {
+    if (hiddenBlocks.includes(block.id)) {
+      block.checked = false;
+
+      let item = document.querySelector(`.${block.id}`);
+      item.classList.toggle('hide-app-block');
+
+      if (block.id === 'quote') {
+        document.querySelector(`.${block.id}`).parentElement.classList.toggle('hide-app-block');
+        document.querySelector(`.${block.id}`).parentElement.previousElementSibling.classList.toggle('hide-app-block');
+      }
+    }
+  });
+}
+
+hideBlocks.querySelectorAll('input').forEach(block => {
+  block.addEventListener('change', hideBlock);
+  console.log(block.id);
+});
+
+function hideBlock(e) {
+  document.querySelector(`.${e.target.id}`).classList.toggle('hide-app-block');
+
+  if (e.target.id === 'quote') {
+    document.querySelector(`.${e.target.id}`).parentElement.classList.toggle('hide-app-block');
+    document.querySelector(`.${e.target.id}`).parentElement.previousElementSibling.classList.toggle('hide-app-block');
+  }
+
+  if (!hiddenBlocks.includes(e.target.id) && !e.target.checked) {
+    console.log(hiddenBlocks);
+    hiddenBlocks.push(e.target.id);
+    console.log(hiddenBlocks);
+  }
+
+  if (hiddenBlocks.includes(e.target.id) && e.target.checked) {
+    hiddenBlocks.pop(e.target.id);
+    console.log(hiddenBlocks);
+  }
+}

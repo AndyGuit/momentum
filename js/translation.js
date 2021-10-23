@@ -39,6 +39,24 @@ const translation = {
     tagsSources: {
       en: '(Unsplash or Flickr only)',
       ru: '(только Unsplash или Flickr)'
+    },
+    blocks: {
+      head: {
+        en: 'Show',
+        ru: 'Показать'
+      },
+      player: {
+        en: 'Player',
+        ru: 'Проигрыватель'
+      },
+      weather: {
+        en: 'Weather',
+        ru: 'Погода'
+      },
+      quotes: {
+        en: 'Quotes',
+        ru: 'Цитаты'
+      }
     }
   }
 };

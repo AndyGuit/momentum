@@ -31,6 +31,10 @@ body {
   padding: 20px;
 }
 
+.player {
+  transition: opacity 0.5s;
+}
+
 .player-controls {
   display: flex;
   align-items: center;
@@ -289,6 +293,7 @@ body {
   width: 190px;
   min-height: 180px;
   text-align: left;
+  transition: opacity 0.5s;
 }
 
 .weather-error {
@@ -468,6 +473,24 @@ body {
 
 .author {
   min-height: 20px;
+}
+
+.hide-blocks {
+  display: flex;
+}
+
+.hide-blocks input,
+.hide-blocks label {
+  cursor: pointer;
+}
+
+.hide-blocks > div {
+  margin-right: 10px;
+}
+
+.hide-app-block {
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {
