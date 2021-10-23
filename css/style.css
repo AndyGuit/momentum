@@ -478,6 +478,8 @@ body {
 
 .hide-blocks {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .hide-blocks input,

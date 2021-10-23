@@ -60,6 +60,18 @@ const translation = {
       quotes: {
         en: 'Quotes',
         ru: 'Цитаты'
+      },
+      date: {
+        en: 'Date',
+        ru: 'Дата'
+      },
+      time: {
+        en: 'Time',
+        ru: 'Время'
+      },
+      greeting: {
+        en: 'Greeting',
+        ru: 'Приветствие'
       }
     }
   }

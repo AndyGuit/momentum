@@ -494,6 +494,9 @@ function settingsTranslation() {
   settingsBlock.querySelector('label[for="player"]').innerText = translation.settings.blocks.player[appLanguage];
   settingsBlock.querySelector('label[for="weather"]').innerText = translation.settings.blocks.weather[appLanguage];
   settingsBlock.querySelector('label[for="quote"]').innerText = translation.settings.blocks.quotes[appLanguage];
+  settingsBlock.querySelector('label[for="date"]').innerText = translation.settings.blocks.date[appLanguage];
+  settingsBlock.querySelector('label[for="time"]').innerText = translation.settings.blocks.time[appLanguage];
+  settingsBlock.querySelector('label[for="greeting"]').innerText = translation.settings.blocks.greeting[appLanguage];
 }
 
 settingsTranslation();
