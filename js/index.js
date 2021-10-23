@@ -70,7 +70,7 @@ showDate();
 function getTimeOfDay() {
   const date = new Date();
   const hours = date.getHours();
-  const timeOfDay = ['night', 'morning', 'day', 'evening'];
+  const timeOfDay = ['night', 'morning', 'afternoon', 'evening'];
   const timeIndex = Math.floor(hours / 6);
   nameBlock.placeholder = translation.placeholder[appLanguage];
   greetingBlock.textContent = translation.greeting[appLanguage][timeIndex];
@@ -405,7 +405,7 @@ async function getLinkToImage() {
     imgLink = data.photos.photo[randomNum].url_l;
   }
   if (picSource === 'github') {
-    imgLink = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${getTimeOfDay()}/${bgNum}.jpg`;
+    imgLink = `https://raw.githubusercontent.com/AndyGuit/stage1-tasks/assets/images/${getTimeOfDay()}/${bgNum}.jpg`;
   }
 
   return imgLink;
@@ -503,7 +503,6 @@ function blockSettings() {
 
 hideBlocks.querySelectorAll('input').forEach(block => {
   block.addEventListener('change', hideBlock);
-  console.log(block.id);
 });
 
 function hideBlock(e) {
@@ -515,13 +514,10 @@ function hideBlock(e) {
   }
 
   if (!hiddenBlocks.includes(e.target.id) && !e.target.checked) {
-    console.log(hiddenBlocks);
     hiddenBlocks.push(e.target.id);
-    console.log(hiddenBlocks);
   }
 
   if (hiddenBlocks.includes(e.target.id) && e.target.checked) {
     hiddenBlocks.pop(e.target.id);
-    console.log(hiddenBlocks);
   }
 }
