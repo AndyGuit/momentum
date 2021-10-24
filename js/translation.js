@@ -72,7 +72,11 @@ const translation = {
       greeting: {
         en: 'Greeting',
         ru: 'Приветствие'
-      }
+      },
+      todo: {
+        en: 'Todo List',
+        ru: 'Список Задач'
+      },
     }
   },
   todo: {
