@@ -46,6 +46,7 @@ let picSource = localStorage.getItem('picSource') || 'github';
 let playNum = 0;
 let tags = [];
 let hiddenBlocks = [];
+let listArr = [];
 let isPlay = false;
 let isMouseDown = false;
 
@@ -546,10 +547,12 @@ function hideBlock(e) {
   }
 }
 
-todoIcon.addEventListener('click', () => {
+todoIcon.addEventListener('click', showTodoBlock);
+
+function showTodoBlock() {
   todoBlock.classList.toggle('active');
   todoIcon.classList.toggle('active');
-});
+}
 
 todoInput.addEventListener('keyup', toggleAddButton);
 
@@ -570,10 +573,7 @@ todoAdd.addEventListener('click', addItemToList);
 function addItemToList() {
   let userData = todoInput.value;
   let getLocalStorage = localStorage.getItem('Todo');
-  let listArr;
-  if (getLocalStorage == null) {
-    listArr = [];
-  } else {
+  if (getLocalStorage != null) {
     listArr = JSON.parse(getLocalStorage);
   }
   listArr.push(userData);
@@ -584,10 +584,7 @@ function addItemToList() {
 
 function showTodoList() {
   let getLocalStorage = localStorage.getItem('Todo');
-  let listArr;
-  if (getLocalStorage == null) {
-    listArr = [];
-  } else {
+  if (getLocalStorage != null) {
     listArr = JSON.parse(getLocalStorage);
   }
   let newLiTag = '';
@@ -609,7 +606,7 @@ todoList.addEventListener('click', function (e) {
 
 function deleteItemFromList(index) {
   let getLocalStorage = localStorage.getItem('Todo');
-  let listArr = JSON.parse(getLocalStorage);
+  listArr = JSON.parse(getLocalStorage);
   listArr.splice(index, 1);
   localStorage.setItem('Todo', JSON.stringify(listArr));
   showTodoList();
