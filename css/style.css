@@ -496,6 +496,107 @@ body {
   pointer-events: none;
 }
 
+.todo-list {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  bottom: 0;
+  left: 0;
+  margin: 20px;
+}
+
+.todo-list__block {
+  color: black;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.todo-list__block.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.todo-list__input {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.todo-list__input input {
+  width: 85%;
+  height: 100%;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 16px;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.todo-list__input button {
+  width: 30px;
+  border: none;
+  outline: none;
+  background: #030303;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  border-radius: 3px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.todo-list__input button.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.todo-list__list {
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.todo-list__list li {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  position: relative;
+  overflow: hidden;
+  margin: 5px 0;
+  background: rgba(203, 203, 203, 0.3);
+  border-radius: 3px;
+}
+
+.todo-list__list li span {
+  position: absolute;
+  right: -20px;
+  transition: right 0.3s;
+  cursor: pointer;
+}
+
+.todo-list__list li:hover span {
+  right: 7px;
+}
+
+.todo-list__icon {
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.todo-list__icon:hover,
+.todo-list__icon.active {
+  opacity: 1;
+}
+
 @media (max-width: 768px) {
   .time {
     min-height: 80px;

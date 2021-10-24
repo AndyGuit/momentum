@@ -34,6 +34,11 @@ const tagList = document.querySelector('.picture__tags ul');
 const settingsIcon = document.querySelector('.settings i');
 const settingsBlock = document.querySelector('.settings__block');
 const hideBlocks = document.querySelector('.hide-blocks');
+const todoBlock = document.querySelector('.todo-list__block');
+const todoIcon = document.querySelector('.todo-list__icon');
+const todoInput = document.querySelector('.todo-list__input input');
+const todoAdd = document.querySelector('.todo-list__input button');
+const todoList = document.querySelector('.todo-list__list');
 
 let randomNum = Math.floor(Math.random() * 20) + 1;
 let appLanguage = localStorage.getItem('language') || langSelect.value;
@@ -536,4 +541,73 @@ function hideBlock(e) {
   if (hiddenBlocks.includes(e.target.id) && e.target.checked) {
     hiddenBlocks.pop(e.target.id);
   }
+}
+
+todoIcon.addEventListener('click', () => {
+  todoBlock.classList.toggle('active');
+  todoIcon.classList.toggle('active');
+});
+
+todoInput.addEventListener('keyup', toggleAddButton);
+
+function toggleAddButton(e) {
+  if (todoInput.value.trim() != 0) {
+    todoAdd.classList.add('active');
+  } else {
+    todoAdd.classList.remove('active');
+  }
+  if (e.key === 'Enter') {
+    addItemToList();
+    todoAdd.classList.remove('active');
+  }
+}
+
+todoAdd.addEventListener('click', addItemToList);
+
+function addItemToList() {
+  let userData = todoInput.value;
+  let getLocalStorage = localStorage.getItem('Todo');
+  let listArr;
+  if (getLocalStorage == null) {
+    listArr = [];
+  } else {
+    listArr = JSON.parse(getLocalStorage);
+  }
+  listArr.push(userData);
+  localStorage.setItem('Todo', JSON.stringify(listArr));
+  showTodoList();
+  todoAdd.classList.remove('active');
+}
+
+function showTodoList() {
+  let getLocalStorage = localStorage.getItem('Todo');
+  let listArr;
+  if (getLocalStorage == null) {
+    listArr = [];
+  } else {
+    listArr = JSON.parse(getLocalStorage);
+  }
+  let newLiTag = '';
+  listArr.forEach((element, index) => {
+    newLiTag += `<li>${element}<span class="todo-list__remove" data-list-num="${index}"><i class="fas fa-trash"></i></span></li>`;
+  });
+  todoList.innerHTML = newLiTag;
+  todoInput.value = '';
+}
+
+showTodoList();
+
+todoList.addEventListener('click', function (e) {
+  if (e.target.classList.contains('fa-trash')) {
+    let listIndex = e.target.parentElement.dataset.listNum;
+    deleteItemFromList(listIndex);
+  }
+});
+
+function deleteItemFromList(index) {
+  let getLocalStorage = localStorage.getItem('Todo');
+  let listArr = JSON.parse(getLocalStorage);
+  listArr.splice(index, 1);
+  localStorage.setItem('Todo', JSON.stringify(listArr));
+  showTodoList();
 }
