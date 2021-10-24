@@ -10,7 +10,6 @@
 }
 
 body {
-  min-width: 480px;
   min-height: 100vh;
   font-family: "Arial", sans-serif;
   font-size: 16px;
@@ -597,6 +596,39 @@ body {
   opacity: 1;
 }
 
+@media (max-width: 800px) {
+  .player-controls {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    margin: 0;
+    position: relative;
+    width: auto;
+  }
+
+  .player-controls > * {
+    margin-bottom: 3px;
+  }
+
+  .track-name {
+    left: 0;
+  }
+
+  .volume {
+    position: absolute;
+    bottom: 12px;
+    left: 140px;
+  }
+
+  .progress {
+    flex-direction: row-reverse;
+    margin-top: 10px;
+  }
+
+  .progress .track-time {
+    right: -5px;
+  }
+}
+
 @media (max-width: 768px) {
   .time {
     min-height: 80px;
@@ -615,5 +647,12 @@ body {
   .name {
     font-size: 32px;
     padding: 5px;
+  }
+}
+
+@media (max-width: 530px) {
+  .progress,
+  .volume {
+    display: none;
   }
 }
