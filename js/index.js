@@ -502,6 +502,9 @@ function settingsTranslation() {
   settingsBlock.querySelector('label[for="date"]').innerText = translation.settings.blocks.date[appLanguage];
   settingsBlock.querySelector('label[for="time"]').innerText = translation.settings.blocks.time[appLanguage];
   settingsBlock.querySelector('label[for="greeting"]').innerText = translation.settings.blocks.greeting[appLanguage];
+  todoIcon.querySelector('span').textContent = translation.todo.icon[appLanguage];
+  todoInput.placeholder = translation.todo.placeholder[appLanguage];
+  todoBlock.querySelector('p').textContent = translation.todo.header[appLanguage];
 }
 
 settingsTranslation();

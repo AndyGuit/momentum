@@ -74,6 +74,20 @@ const translation = {
         ru: 'Приветствие'
       }
     }
+  },
+  todo: {
+    icon: {
+      en: 'Todo',
+      ru: 'Список Задач'
+    },
+    header: {
+      en: 'Todo List',
+      ru: 'Список Задач'
+    },
+    placeholder: {
+      en: 'Add your new todo',
+      ru: 'Добавьте новую задачу'
+    }
   }
 };
 
