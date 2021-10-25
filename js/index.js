@@ -157,7 +157,7 @@ function getSlidePrev() {
 slidePrev.addEventListener('click', getSlidePrev);
 
 async function getWeather() {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&lang=${appLanguage}&appid=08f2a575dda978b9c539199e54df03b0&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&lang=${appLanguage}&appid=1fd4e4aec3019e64ba3f665006f97548&units=metric`;
 
   try {
     const res = await fetch(url);
