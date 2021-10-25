@@ -590,7 +590,7 @@ function showTodoList() {
   }
   let newLiTag = '';
   listArr.forEach((element, index) => {
-    newLiTag += `<li>${element}<span class="todo-list__remove" data-list-num="${index}"><i class="fas fa-trash"></i></span></li>`;
+    newLiTag += `<li>${element}<span class="todo-list__item" data-list-num="${index}"><i class="fas fa-trash"></i></span></li>`;
   });
   todoList.innerHTML = newLiTag;
   todoInput.value = '';
@@ -611,4 +611,13 @@ function deleteItemFromList(index) {
   listArr.splice(index, 1);
   localStorage.setItem('Todo', JSON.stringify(listArr));
   showTodoList();
+}
+
+body.addEventListener('click', closeTodoBlock);
+
+function closeTodoBlock(e) {
+  if (!e.target.closest('.todo-list__item')) {
+    todoBlock.classList.remove('active');
+    todoIcon.classList.remove('active');
+  }
 }
